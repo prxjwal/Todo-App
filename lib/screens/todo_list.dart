@@ -37,7 +37,7 @@ class _TodoListPageState extends State<TodoListPage> {
                   return ListTile(
                     trailing: PopupMenuButton(onSelected: (value) {
                       if (value == "edit") {
-                        //
+                        naviagteToEdit(item);
                       } else if (value == "delete") {
                         deleteById(item['_id'] as String);
                       }
@@ -101,8 +101,10 @@ class _TodoListPageState extends State<TodoListPage> {
     }
   }
 
-  Future<void> naviagteToEdit() async {
-    Get.to(const AddToPage());
+  Future<void> naviagteToEdit(Map item) async {
+    await Get.to(AddToPage(todo: item));
+
+    fetchTodo();
   }
 
   void showSnackBar(String message) {

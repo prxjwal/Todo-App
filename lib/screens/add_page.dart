@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 int flag = 0;
+bool isEdit = false;
 
 class ControllerT extends GetxController {
   final TextEditingController titleController = TextEditingController();
@@ -15,10 +16,22 @@ class ControllerT extends GetxController {
   String get text2 => desContoller.text;
 }
 
-class AddToPage extends StatelessWidget {
-  const AddToPage({super.key});
+class AddToPage extends StatefulWidget {
+  final Map? todo;
+
+  const AddToPage({super.key, this.todo});
 
   @override
+  State<AddToPage> createState() => _AddToPageState();
+}
+
+class _AddToPageState extends State<AddToPage> {
+  @override
+  void initState() {
+  if()
+
+    super.initState();
+  }
   Widget build(BuildContext context) {
     return GetBuilder<ControllerT>(
       builder: (controller) {
