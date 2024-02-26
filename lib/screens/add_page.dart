@@ -28,15 +28,18 @@ class AddToPage extends StatefulWidget {
 class _AddToPageState extends State<AddToPage> {
   @override
   void initState() {
-  if()
+    if (widget.todo != null) {
+      isEdit = true;
+    }
 
     super.initState();
   }
+
   Widget build(BuildContext context) {
     return GetBuilder<ControllerT>(
       builder: (controller) {
         return Scaffold(
-          appBar: AppBar(title: const Text('Add Todo')),
+          appBar: AppBar(title: Text(isEdit ? "Edit todo" : 'Add Todo')),
           body: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
