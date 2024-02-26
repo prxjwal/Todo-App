@@ -1,10 +1,11 @@
 // ignore_for_file: non_constant_identifier_names
+import 'dart:convert';
 
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import 'package:get/get_state_manager/src/simple/get_state.dart';
+
+int flag = 0;
 
 class ControllerT extends GetxController {
   final TextEditingController titleController = TextEditingController();
@@ -38,9 +39,9 @@ class AddToPage extends StatelessWidget {
               ],
             ),
           ),
-          floatingActionButton: FloatingActionButton(
+          floatingActionButton: const FloatingActionButton(
             onPressed: submitData,
-            child: const Icon(Icons.save),
+            child: Icon(Icons.save),
           ),
         );
       },
@@ -48,14 +49,31 @@ class AddToPage extends StatelessWidget {
   }
 }
 
-void submitData() {
+void submitData() async {
   final controller = Get.find<ControllerT>();
   final Title = controller.titleController.text;
   final Desc = controller.desContoller.text;
 
-  final body = {
-    "title": Title,
-    "description": Desc,
-    "iscompleted": false
+  final body = {"title": Title, "description": Desc, "iscompleted": false};
+
+  const url = "https://api.nstack.in/v1/todos";
+  final uri = Uri.parse(url);
+  final response = await http.post(uri, body: jsonEncode(body), headers: {
+    "Content-Type": "application/json",
+  });
+
+  void showSnackBar(String message) {
+    Get.snackbar('Message', message, snackPosition: SnackPosition.TOP);
+  }
+
+  if (response.statusCode == 201) {
+    final controller = Get.find<ControllerT>();
+    controller.titleController.text = '';
+    controller.desContoller.text = '';
+    Get.find<ControllerT>().update([1]); // Update the flag value to 1
+    showSnackBar('Todo added successfully');
+  } else {
+    Get.find<ControllerT>().update([0]); // Update the flag value to 0
+    showSnackBar('Failed to add todo');
   }
 }
