@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:get/route_manager.dart';
+import 'package:todo_flutter/screens/addPage.dart';
 import 'package:todo_flutter/screens/add_page.dart';
 import 'package:http/http.dart' as http;
 
@@ -44,12 +45,12 @@ class _TodoListPageState extends State<TodoListPage> {
                     }, itemBuilder: (context) {
                       return [
                         const PopupMenuItem(
-                          child: Text('Edit'),
                           value: 'edit',
+                          child: Text('Edit'),
                         ),
                         const PopupMenuItem(
-                          child: Text('Delete'),
                           value: 'delete',
+                          child: Text('Delete'),
                         )
                       ];
                     }),
@@ -64,7 +65,7 @@ class _TodoListPageState extends State<TodoListPage> {
           appBar: AppBar(title: const Text('Todo List')),
           floatingActionButton: FloatingActionButton.extended(
             onPressed: () {
-              Get.to(const AddToPage());
+              Get.to(const AddPage());
             },
             label: const Text("Add Todo"),
           ),
